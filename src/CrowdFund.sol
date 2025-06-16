@@ -40,7 +40,7 @@ contract CrowdFund {
         description = _description;
     }
 
-    function contribute() external payable validAddress(msg.sender) {
+    function contribute() public payable validAddress(msg.sender) {
         require(block.timestamp < deadline, "Funding period over");
         require(msg.value > 0, "Must send ETH");
 
@@ -80,5 +80,9 @@ contract CrowdFund {
 
     function hasGoalBeenMet() external view returns (bool) {
         return totalRaised >= goal;
+    }
+
+    receive() external payable {
+        contribute();
     }
 }

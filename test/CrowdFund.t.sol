@@ -3,6 +3,7 @@ pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
 import {CrowdFund} from "../src/CrowdFund.sol";
+import "forge-std/console.sol";
 
 contract CrowdFundTest is Test {
     CrowdFund public fund;
@@ -25,6 +26,9 @@ contract CrowdFundTest is Test {
     function testContributeIncreasesBalance() public {
         vm.prank(contributor1);
         fund.contribute{value: 2 ether}();
+        
+        console.log("Contract Balance:", address(fund).balance);
+
         assertEq(fund.contributions(contributor1), 2 ether);
         assertEq(fund.totalRaised(), 2 ether);
     }
